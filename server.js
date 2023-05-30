@@ -52,6 +52,13 @@ app.get("/navs", async (req, res) => {
   res.json(result);
 });
 
+app.post("/addnav", async (req,res)=>{
+  const newNav= new navsModel({...req.body, isActive : true})
+  await newNav.save();
+  res.send("Successfully added the Navigation!")
+
+})
+
 app.get("/cards", async (req, res) => {
   const result = await cardsModel.find({});
   res.json(result);
