@@ -7,6 +7,7 @@ const navsModel = require("./model/navsModel");
 const cardsModel = require("./model/cardsModel");
 const usersModel = require("./model/usersModel");
 const transModel = require("./model/transModel");
+const loansModel = require("./model/loansModel");
 const jwt = require("jsonwebtoken");
 
 const app = express();
@@ -36,6 +37,18 @@ app.post("/addacctype", (req, res) => {
   newAccType.save();
   res.json("Successfully added Account Type!!!");
 });
+
+app.get("/loans",async(req,res)=>{
+  const result =await loansModel.find({});
+  res.send(result)
+})
+
+app.post("/addloan", (req,res)=>{
+  const payload= req.body;
+  const newLoan = new loansModel({...payload, isActive:true})
+  newLoan.save();
+  res.send("Added Loan successfully!")
+})
 
 app.get("/branches", async (req, res) => {
   const result = await branchesModel.find({});
